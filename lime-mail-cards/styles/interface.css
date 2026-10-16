@@ -1,0 +1,368 @@
+/* Milk & Lime interface — Thunderbird 157. SPDX-License-Identifier: MPL-2.0 */
+@-moz-document url-prefix("chrome://messenger/content/"), url("about:3pane"), url("about:message") {
+  @media not (prefers-contrast) {
+    :root {
+      /* Штатный inline-размер UIFontSize сохраняет пользовательское увеличение. */
+      font-size: 15px;
+      font-family: system-ui, sans-serif !important;
+      color-scheme: light !important;
+      color: #252b29 !important;
+      background-color: #f5f6f2 !important;
+
+      --layout-background-0: #fafbf7 !important;
+      --layout-background-1: #fafbf7 !important;
+      --layout-background-2: #eef1e9 !important;
+      --layout-background-3: #eef1e9 !important;
+      --layout-background-4: #e5ecd9 !important;
+      --layout-color-0: #252b29 !important;
+      --layout-color-1: #252b29 !important;
+      --layout-color-2: #626c65 !important;
+      --layout-color-3: #626c65 !important;
+      --layout-border-0: #dce1d8 !important;
+      --layout-border-1: #dce1d8 !important;
+      --layout-border-2: #a7b19b !important;
+      --color-text-base: #252b29 !important;
+      --color-surface-base: #fafbf7 !important;
+      --color-surface-subtle: #eef1e9 !important;
+      --color-surface-border: #dce1d8 !important;
+      --color-surface-border-intense: #a7b19b !important;
+
+      --lwt-header-image: none !important;
+      --lwt-additional-images: none !important;
+      --lwt-frame: #eef1e9 !important;
+      --lwt-frame-inactive: #eef1e9 !important;
+      --lwt-text-color: #252b29 !important;
+      --lwt-tab-text: #252b29 !important;
+      --lwt-tab-line-color: #d4f55b !important;
+      --lwt-selected-tab-background-color: #eef1e9 !important;
+      --toolbar-background-color: #eef1e9 !important;
+      --toolbar-text-color: #252b29 !important;
+      --toolbarbutton-icon-fill: #626c65 !important;
+      --toolbarseparator-color: #dce1d8 !important;
+      --chrome-content-separator-color: #dce1d8 !important;
+      --toolbar-field-background-color: #f5f6f2 !important;
+      --toolbar-field-background-color-focus: #f5f6f2 !important;
+      --toolbar-field-color: #252b29 !important;
+      --toolbar-field-text-color-focus: #252b29 !important;
+      --toolbar-field-border-color: #a7b19b !important;
+      --toolbar-field-focus-border-color: #6c8d32 !important;
+      --search-bar-color: #252b29 !important;
+      --search-bar-background: #f5f6f2 !important;
+      --search-bar-focus-background: #f5f6f2 !important;
+      --search-bar-border-color: #a7b19b !important;
+      --search-field-placeholder: #626c65 !important;
+
+      --sidebar-background-color: #eef1e9 !important;
+      --sidebar-text-color: #626c65 !important;
+      --sidebar-border-color: #dce1d8 !important;
+      --sidebar-highlight-background-color: #dfe8cb !important;
+      --sidebar-highlight-text-color: #252b29 !important;
+      --selected-item-color: #dfe8cb !important;
+      --selected-item-text-color: #252b29 !important;
+      --treeitem-background-selected: #dfe8cb !important;
+      --treeitem-background-active: #dfe8cb !important;
+      --treeitem-background-hover: #e5ecd9 !important;
+      --treeitem-text-active: #252b29 !important;
+      --tree-view-bg: #fafbf7 !important;
+      --tree-view-color: #626c65 !important;
+      --tree-card-border: #e2e7dc !important;
+      --tree-card-border-hover: #d0dda9 !important;
+      --tree-card-border-focus: #6c8d32 !important;
+      --tree-card-border-selected: #d0dda9 !important;
+      --tree-card-border-selected-unfocused: #d0dda9 !important;
+      --tree-card-background-selected: #edf3db !important;
+      --tree-card-background-selected-current: #edf3db !important;
+      --tree-card-background-selected-unfocused: #edf3db !important;
+      --tree-card-background-selected-current-unfocused: #edf3db !important;
+      --listbox-selected-bg: #dfe8cb !important;
+      --listbox-focused-selected-bg: #dfe8cb !important;
+      --listbox-selected-color: #252b29 !important;
+      --listbox-focused-selected-color: #252b29 !important;
+      --listbox-hover: #e5ecd9 !important;
+      --unread-color: #252b29 !important;
+      --thread-pane-unread-fill: #789e30 !important;
+      --thread-pane-unread-stroke: #789e30 !important;
+      --thread-line-color: #789e30 !important;
+      --folderpane-unread-count-background: #dfe5d6 !important;
+      --folderpane-unread-count-text: #626c65 !important;
+      --folderpane-unread-new-count-background: #d0dda9 !important;
+      --folderpane-total-count-background: #eef1e9 !important;
+      --folderpane-total-count-text: #626c65 !important;
+      --new-folder-color: #456522 !important;
+      --new-subject-color: #456522 !important;
+      --new-color: #456522 !important;
+      --folder-color-inbox: #456522 !important;
+      --folder-color-draft: #626c65 !important;
+      --folder-color-sent: #456522 !important;
+      --folder-color-archive: #626c65 !important;
+      --folder-color-outbox: #456522 !important;
+      --folder-color-folder: #78856b !important;
+      --folder-color-folder-filter: #456522 !important;
+
+      --focus-outline-color: #6c8d32 !important;
+      --item-focus-selected-border-color: #6c8d32 !important;
+      --primary: #456522 !important;
+      --link-color: #456522 !important;
+      --link-color-hover: #304b13 !important;
+      --link-color-active: #304b13 !important;
+      --link-color-visited: #456522 !important;
+      --button-background-color: #eef1e9 !important;
+      --button-hover-background-color: #e5ecd9 !important;
+      --button-active-background-color: #dfe8cb !important;
+      --button-border-color: #a7b19b !important;
+      --button-text-color: #252b29 !important;
+      --button-primary-background-color: #d4f55b !important;
+      --button-primary-hover-background-color: #e1fa8a !important;
+      --button-primary-active-background-color: #bedb4b !important;
+      --button-primary-text-color: #252b29 !important;
+      --button-primary-border-color: #d4f55b !important;
+      --button-link-text-color: #456522 !important;
+    }
+
+    #navigation-toolbox,
+    #compose-toolbox,
+    #tabs-toolbar,
+    #unifiedToolbar,
+    #status-bar {
+      background-color: #eef1e9 !important;
+      background-image: none !important;
+      color: #252b29 !important;
+    }
+
+    :root {
+      --spaces-icon-size: 21px !important;
+      --spaces-padding: 9.5px !important;
+      --spaces-button-padding: 7.5px !important;
+      --spaces-total-width: 56px !important;
+      --spaces-container-gap: 16px !important;
+      --spaces-gap: 16px !important;
+      --spaces-button-text-color: #252b29 !important;
+      --spaces-button-active-text-color: #2c381f !important;
+--spaces-icon-mail: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23252b29' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='5' width='18' height='14' rx='3'/%3E%3Cpath d='m4 7 8 6 8-6'/%3E%3C/svg%3E") !important;
+      --spaces-icon-address-book: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23252b29' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='10' cy='8' r='3'/%3E%3Cpath d='M4 20v-3c0-5 12-5 12 0v3M17 5c4 0 4 6 0 6M19 14c3 1 3 3 3 6'/%3E%3C/svg%3E") !important;
+      --spaces-icon-calendar: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23252b29' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='5' width='16' height='16' rx='2'/%3E%3Cpath d='M8 3v4M16 3v4M4 10h16M8 14h3M14 14h2'/%3E%3C/svg%3E") !important;
+      --spaces-icon-tasks: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23252b29' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='4' width='16' height='17' rx='2'/%3E%3Cpath d='m8 12 3 3 6-7'/%3E%3C/svg%3E") !important;
+      --spaces-icon-chat: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23252b29' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 4h16v12H9l-5 4zM8 8h8M8 12h6'/%3E%3C/svg%3E") !important;
+      --spaces-icon-settings: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23252b29' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 3-1 3-3 1-2 4 2 3v4l4 2 3-1 4 1 3-3v-4l2-3-2-4-4-1-2-2z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E") !important;
+    }
+
+    #spacesToolbar {
+      background: #ecefe6 !important;
+      border-inline-end: 1px solid #dce1d8 !important;
+      padding-block: 17px 10px !important;
+    }
+
+    #spacesToolbar .spaces-toolbar-button {
+      border-radius: 9px !important;
+    }
+
+    #spacesToolbar .spaces-toolbar-button > img {
+      stroke-opacity: 1 !important;
+    }
+
+    button, input, select, textarea {
+      font-family: inherit !important;
+    }
+
+    #folderTree { font-size: calc(14rem / 15) !important; }
+    #threadPaneFolderName { font-size: calc(20rem / 15) !important; }
+    .tabmail-tab { font-size: calc(13rem / 15) !important; }
+
+    #folderTree li.selected > .container {
+      box-shadow: inset 2px 0 #6c8d32 !important;
+    }
+
+    global-search-bar {
+      --button-border-radius: 7px !important;
+      --search-bar-border-color: #cfd6c7 !important;
+    }
+
+    .tab-background {
+      border-radius: 7px 7px 0 0 !important;
+    }
+
+    .tab-background[selected] {
+      background: #fafbf7 !important;
+      border: 1px solid #dce1d8 !important;
+      border-block-end-color: #fafbf7 !important;
+    }
+
+    .tabmail-tab[selected] {
+      box-shadow: none !important;
+    }
+
+    #threadPaneFolderCountContainer, #threadPaneQuickFilterButton {
+      font-size: 0.8rem !important;
+      color: #626c65 !important;
+    }
+
+    #folderTree .mode-container > .mode-name {
+      font-size: 0.8rem !important;
+      font-weight: 600 !important;
+      letter-spacing: 0.03em !important;
+      color: #626c65 !important;
+    }
+
+    #folderTree li[data-server-type] > .container > .name {
+      font-size: calc(13rem / 15) !important;
+      font-weight: 600 !important;
+    }
+
+    #folderTree li.unread > .container > .unread-count {
+      color: #252b29 !important;
+      background-color: #dfe5d6 !important;
+    }
+
+    #folderTree li.new-messages > .container > .unread-count {
+      background-color: #d0dda9 !important;
+    }
+
+    /* Контурный значок показывает непрочитанные во вложенных папках, а не отключённое состояние. */
+    #folderTree li.unread.children.collapsed:has(ul > .unread) > .container > .unread-count {
+      color: #626c65 !important;
+      background-color: transparent !important;
+      border-color: #a7b19b !important;
+    }
+
+    #folderTree li.new-messages.unread.children.collapsed:has(ul > .new-messages) > .container > .unread-count {
+      color: #456522 !important;
+      border-color: #6c8d32 !important;
+    }
+
+    #threadTree tr.selected {
+      background-color: #dfe8cb !important;
+      color: #252b29 !important;
+      box-shadow: inset 2px 0 #6c8d32 !important;
+    }
+
+    #threadTree[rows="thread-card"] .card-layout:not([data-properties~="dummy"]) .card-container {
+      border-color: transparent !important;
+      border-block-end-color: #e2e7dc !important;
+      border-radius: 0 !important;
+    }
+
+    #threadTree[rows="thread-card"] .card-layout.selected {
+      background-color: transparent !important;
+      box-shadow: none !important;
+    }
+
+    #threadTree[rows="thread-card"] .card-layout.selected:not([data-properties~="dummy"]) .card-container {
+      border-color: transparent !important;
+      border-radius: 6px !important;
+      box-shadow: inset 3px 0 #789e30 !important;
+    }
+
+    #threadTree[rows="thread-card"]:focus-within .card-layout.current .card-container {
+      outline: 2px solid #6c8d32 !important;
+      outline-offset: -2px !important;
+    }
+
+    /* Три штатные строки: две под тему, одна под метаданные; высота виртуального списка сохранена. */
+    #threadTree[rows="thread-card"]:not(.cards-row-compact):not([data-lmc-active]) .card-layout:not([data-properties~="dummy"]) {
+      & .card-container > .thread-card-column:not(.read-status-column) {
+        display: grid !important;
+        grid-template-columns: auto minmax(0, 1fr) auto !important;
+        grid-template-rows: minmax(0, 1fr) auto !important;
+        column-gap: 3px !important;
+        min-inline-size: 0 !important;
+      }
+
+      & .thread-card-dynamic-row {
+        display: contents !important;
+      }
+
+      & .thread-card-subject-container {
+        grid-column: 1 / -1 !important;
+        grid-row: 1 !important;
+        align-self: start !important;
+        min-inline-size: 0 !important;
+      }
+
+      & .subject {
+        display: -webkit-box !important;
+        -webkit-box-orient: vertical !important;
+        -webkit-line-clamp: 2 !important;
+        white-space: normal !important;
+        overflow: hidden !important;
+        line-height: 1.35 !important;
+        font-size: 1rem !important;
+        font-weight: 400 !important;
+        color: #252b29 !important;
+      }
+
+      & .thread-card-row {
+        grid-column: 2 !important;
+        grid-row: 2 !important;
+        min-inline-size: 0 !important;
+      }
+
+      & .sender, & .date {
+        font-size: 0.9rem !important;
+        font-weight: 400 !important;
+        color: #626c65 !important;
+        opacity: 1 !important;
+      }
+
+      & .thread-card-button {
+        grid-column: 1 !important;
+        grid-row: 2 !important;
+        align-self: center !important;
+      }
+
+      & .thread-card-icon-info {
+        grid-column: 3 !important;
+        grid-row: 2 !important;
+        align-self: center !important;
+      }
+
+      &[data-properties~="unread"] .subject {
+        font-weight: 700 !important;
+      }
+    }
+
+    #threadTree .card-layout[data-properties~="unread"] .read-status {
+      fill: #789e30 !important;
+      stroke: #789e30 !important;
+    }
+
+    #threadTree[rows="thread-card"][data-lmc-active] .lmc-card {
+      & .subject { color: #252b29 !important; }
+      & .sender { color: #626c65 !important; }
+      &[data-properties~="unread"] .sender { color: #252b29 !important; }
+      &[data-properties~="unread"] .lmc-avatar {
+        background-color: #e7eddb !important;
+        color: #456522 !important;
+      }
+      &[data-properties~="unread"]:not(.selected):not(:hover) .card-container {
+        background-color: #ffffff !important;
+      }
+    }
+
+    #threadTree .card-layout:is([data-properties~="replied"], [data-properties~="forwarded"], [data-properties~="redirected"]) .subject-line img,
+    #threadTree .state:is(.replied, .forwarded, .redirected) {
+      fill: #456522 !important;
+      stroke: #6c8d32 !important;
+    }
+
+    #threadTree tbody:focus-visible > tr.current,
+    #folderTree:focus-visible li.selected > .container {
+      outline: 2px solid #6c8d32 !important;
+      outline-offset: -2px !important;
+    }
+
+    #unifiedToolbar .write-message .unified-toolbar-button,
+    #folderPaneWriteMessage,
+    #button-send {
+      background-color: #d4f55b !important;
+      color: #252b29 !important;
+      border-color: #d4f55b !important;
+      border-radius: 7px !important;
+    }
+
+    #unifiedToolbar .write-message .unified-toolbar-button:hover:not(:disabled),
+    #folderPaneWriteMessage:hover:not(:disabled),
+    #button-send:hover:not([disabled]) {
+      background-color: #e1fa8a !important;
+    }
+  }
+}

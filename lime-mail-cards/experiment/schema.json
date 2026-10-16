@@ -1,0 +1,98 @@
+[
+  {
+    "namespace": "LimeCards",
+    "functions": [
+      {
+        "name": "start",
+        "type": "function",
+        "async": true,
+        "parameters": [
+          {
+            "name": "options",
+            "type": "object",
+            "properties": {
+              "missingPreview": {
+                "type": "string"
+              },
+              "tagLabel": {
+                "type": "string"
+              },
+              "removeTagLabel": {
+                "type": "string"
+              },
+              "removeThreadTagLabel": {
+                "type": "string"
+              },
+              "separateTags": {
+                "type": "boolean"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "setSeparateTags",
+        "type": "function",
+        "async": true,
+        "parameters": [
+          {
+            "name": "enabled",
+            "type": "boolean"
+          }
+        ]
+      },
+      {
+        "name": "getContactPhoto",
+        "type": "function",
+        "async": true,
+        "parameters": [
+          {
+            "name": "address",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "resetAvatars",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "setAvatar",
+        "type": "function",
+        "async": true,
+        "parameters": [
+          {
+            "name": "address",
+            "type": "string"
+          },
+          {
+            "name": "image",
+            "type": "string"
+          },
+          {
+            "name": "generation",
+            "type": "integer"
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "name": "onAvatarRequest",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "address",
+            "type": "string"
+          },
+          {
+            "name": "generation",
+            "type": "integer"
+          }
+        ]
+      }
+    ]
+  }
+]

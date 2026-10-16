@@ -1,0 +1,46 @@
+{
+  "manifest_version": 2,
+  "name": "Milk & Lime",
+  "author": "rayout (Alexandr Shapovalov)",
+  "version": "0.1.0",
+  "description": "__MSG_extensionDescription__",
+  "default_locale": "en",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "milk-lime-theme@themes.local",
+      "strict_min_version": "157.0",
+      "strict_max_version": "157.*"
+    }
+  },
+  "theme": {
+    "properties": {
+      "color_scheme": "light",
+      "content_color_scheme": "light"
+    },
+    "colors": {
+      "frame": "#eef1e9",
+      "frame_inactive": "#eef1e9",
+      "tab_background_text": "#626c65",
+      "tab_text": "#252b29",
+      "tab_line": "#6c8d32",
+      "tab_selected": "#fafbf7",
+      "toolbar": "#eef1e9",
+      "toolbar_text": "#252b29",
+      "toolbar_field": "#fafbf7",
+      "toolbar_field_text": "#252b29",
+      "toolbar_field_border": "#a7b19b",
+      "toolbar_field_focus": "#ffffff",
+      "toolbar_field_text_focus": "#252b29",
+      "toolbar_field_border_focus": "#6c8d32",
+      "icons": "#626c65",
+      "sidebar": "#eef1e9",
+      "sidebar_text": "#252b29",
+      "sidebar_border": "#dce1d8",
+      "sidebar_highlight": "#dfe8cb",
+      "sidebar_highlight_text": "#252b29",
+      "popup": "#fafbf7",
+      "popup_text": "#252b29",
+      "popup_border": "#dce1d8"
+    }
+  }
+}

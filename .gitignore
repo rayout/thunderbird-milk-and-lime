@@ -1,0 +1,11 @@
+dist/
+node_modules/
+__pycache__/
+*.xpi
+*.zip
+*.log
+*.sqlite*
+prefs.js
+user.js
+lime-cards-test-*/
+backup*/

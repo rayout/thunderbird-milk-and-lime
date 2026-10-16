@@ -1,0 +1,44 @@
+const fs=require('node:fs'), path=require('node:path'), assert=require('node:assert/strict');
+const browser=require('./browser.cjs');
+const source=fs.readFileSync(path.join(__dirname,'../experiment/cards.js'),'utf8');
+const script=async function(){
+  const results=[];
+  const check=(name,pass)=>results.push({name,pass:Boolean(pass)});
+  const tick=()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+  try {
+    const row=document.querySelector('tr'),tree=document.querySelector('#threadTree');
+    row.index=0;
+    const root={subject:'Root',sender:'Alice',date:'Yesterday'};
+    const latest={subject:'Re: Latest',sender:'Bob',date:'Today'};
+    const first={key:'f#2',rowKey:'f#1#root',displayName:'Bob',preview:'New preview',nativeSummary:root,summary:latest,headers:[1,2]};
+    let data=first, passedHeaders;
+    const readRow=()=>data;
+    const stop=LimeCards.attach(window,{readRow,missingPreview:'None',tags:{render:(r,headers)=>passedHeaders=headers,remove(){},dispose(){}}});
+    await tick();
+    check('collapsed fields and preview use latest message',row.querySelector('.subject').textContent==='Re: Latest'&&row.querySelector('.sender').textContent==='Bob'&&row.querySelector('.date').textContent==='Today'&&row.querySelector('.lmc-preview').textContent==='New preview');
+    check('summary announces latest fields without attributing root status to latest message',row.querySelector('.subject').title==='Re: Latest'&&row.querySelector('.sender').title==='Bob'&&row.getAttribute('aria-label')==='Bob, Today, Re: Latest');
+    check('tag renderer receives the whole thread once',passedHeaders===first.headers);
+    row.setAttribute('aria-label','Alice, Yesterday, Root, Unread');
+    await tick();
+    check('late native accessibility update is corrected',row.getAttribute('aria-label')==='Bob, Today, Re: Latest');
+    data={...first,summary:null,key:'f#1',displayName:'Alice',preview:'Old preview',headers:[1]};
+    row.classList.add('expanded');await tick();
+    check('expanded root restores individual values',row.querySelector('.subject').textContent==='Root'&&row.querySelector('.sender').textContent==='Alice'&&row.querySelector('.date').textContent==='Yesterday'&&row.getAttribute('aria-label')==='Alice, Yesterday, Root, Unread'&&passedHeaders.length===1);
+    data=first;row.classList.remove('expanded');await tick();
+    tree.classList.add('cards-row-compact');await tick();
+    check('compact mode restores native subject sender and date',row.querySelector('.subject').textContent==='Root'&&row.querySelector('.sender').textContent==='Alice'&&row.querySelector('.date').textContent==='Yesterday');
+    tree.classList.remove('cards-row-compact');await tick();
+    data={key:'f#4',rowKey:'f#4#other',displayName:'Carol',preview:'Other',nativeSummary:{subject:'Other subject',sender:'Carol',date:'Tomorrow'},summary:null,headers:[4]};
+    row.querySelector('.subject').textContent='Other subject';row.querySelector('.subject').title='Other subject';
+    row.querySelector('.sender').textContent='Carol';row.querySelector('.sender').title='Carol';
+    row.querySelector('.date').textContent='Tomorrow';row.setAttribute('aria-label','Carol, Tomorrow, Other subject, Read');
+    await tick();
+    check('recycling never restores the previous root',row.querySelector('.subject').textContent==='Other subject'&&row.querySelector('.sender').textContent==='Carol'&&row.getAttribute('aria-label')==='Carol, Tomorrow, Other subject, Read');
+    data=first;row.querySelector('.subject').textContent='Root';row.querySelector('.sender').textContent='Alice';row.querySelector('.date').textContent='Yesterday';row.setAttribute('aria-label','Alice, Yesterday, Root, Unread');await tick();
+    stop();
+    check('disable restores native fields and removes added preview',row.querySelector('.subject').textContent==='Root'&&row.querySelector('.sender').textContent==='Alice'&&row.querySelector('.date').textContent==='Yesterday'&&!row.querySelector('.lmc-preview')&&row.getAttribute('aria-label')==='Alice, Yesterday, Root, Unread');
+  }catch(error){check(error.message,false);}
+  await fetch('/result',{method:'POST',body:JSON.stringify(results)});
+};
+const html='<!doctype html><div id="threadTree" rows="thread-card"><table><tbody><tr class="card-layout" aria-label="Alice, Yesterday, Root, Unread"><td><div class="card-container"><div class="thread-card-column"><span class="subject" title="Root">Root</span><span class="sender" title="Alice">Alice</span><span class="date">Yesterday</span></div></div></td></tr></tbody></table></div><script>'+source+'\n('+script.toString()+')();</script>';
+browser(html).then(results=>{results.forEach(r=>console.log((r.pass?'PASS ':'FAIL ')+r.name));assert(results.length&&results.every(r=>r.pass),'Thread DOM checks failed');}).catch(error=>{console.error(error.message);process.exitCode=1;});

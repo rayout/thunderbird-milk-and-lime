@@ -1,0 +1,80 @@
+{
+  "extensionName": {
+    "message": "Lime Mail Cards"
+  },
+  "extensionDescription": {
+    "message": "Sender photos and logos, message previews and tags in Thunderbird cards."
+  },
+  "missingPreview": {
+    "message": "Preview unavailable"
+  },
+  "tagLabel": {
+    "message": "Message tags"
+  },
+  "removeTagLabel": {
+    "message": "Remove tag"
+  },
+  "removeThreadTagLabel": {
+    "message": "Remove tag from entire thread"
+  },
+  "separateTagsLabel": {
+    "message": "Show tags on a separate line"
+  },
+  "separateTagsHelp": {
+    "message": "Off: tags replace the preview in three-line cards. On: subject, tags, preview, and sender/date occupy four lines. Changes apply immediately."
+  },
+  "settingSaved": {
+    "message": "Saved"
+  },
+  "settingError": {
+    "message": "Could not load or save this setting. Reopen the settings page."
+  },
+  "avatarsTitle": {
+    "message": "Sender avatars"
+  },
+  "avatarsHelp": {
+    "message": "Priority: address book photo, assigned address or domain image, then an online logo. Initials remain when no image is available."
+  },
+  "onlineAvatarsLabel": {
+    "message": "Find logos automatically"
+  },
+  "onlineAvatarsHelp": {
+    "message": "DuckDuckGo receives the sender domain and your IP address. Names, full email addresses and message contents are not sent. Images are cached locally for 7 days; missing images for one day. Common personal mail providers (such as Gmail) are skipped."
+  },
+  "clearAvatarCache": {
+    "message": "Refresh cached logos"
+  },
+  "cacheCleared": {
+    "message": "Cache reset. Visible logos will reload if online lookup is enabled."
+  },
+  "avatarRulesTitle": {
+    "message": "Assigned images"
+  },
+  "avatarAddress": {
+    "message": "Email address or domain"
+  },
+  "avatarFile": {
+    "message": "Image"
+  },
+  "avatarFileHelp": {
+    "message": "PNG, JPEG, WebP or GIF up to 8 MB and 16 million pixels. Images are cropped to a square and stored locally at 64 × 64. Saving an existing address replaces its image."
+  },
+  "saveAvatar": {
+    "message": "Save image"
+  },
+  "removeAvatar": {
+    "message": "Remove image"
+  },
+  "noAvatarRules": {
+    "message": "No images assigned yet."
+  },
+  "invalidAvatarAddress": {
+    "message": "Enter an email address or domain without https:// or a path."
+  },
+  "invalidAvatarFile": {
+    "message": "Could not read the image. Choose PNG, JPEG, WebP or GIF up to 8 MB and 16 million pixels."
+  },
+  "avatarRulesLimit": {
+    "message": "Limit reached: 100 assigned images. Remove unused images."
+  }
+}
