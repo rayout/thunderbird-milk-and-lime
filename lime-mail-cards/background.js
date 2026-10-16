@@ -1,8 +1,8 @@
 /* SPDX-License-Identifier: MPL-2.0 */
 async function start() {
-  const settings = await messenger.storage.local.get({ separateTags: false, onlineAvatars: false, avatarRules: {}, avatarCache: {}, avatarCacheVersion: 0 });
+  const settings = await messenger.storage.local.get({ separateTags: false, onlineAvatars: false, avatarRules: {}, avatarCache: {}, avatarCacheVersion: 0, nicknameSenders: [] });
   const avatars = LimeAvatars.create({
-    contact: address => messenger.LimeCards.getContactPhoto(address),
+    contact: (address, nickname) => messenger.LimeCards.getContactPhoto(address, nickname),
     cache: settings.avatarCacheVersion === 1 ? settings.avatarCache : {},
     save: avatarCache => messenger.storage.local.set({avatarCache, avatarCacheVersion: 1}),
   });
@@ -18,6 +18,7 @@ async function start() {
       .finally(() => pending.delete(key));
     pending.set(key, request);
   });
+  await messenger.LimeCards.setNicknameSenders(settings.nicknameSenders);
   await messenger.LimeCards.start({
     missingPreview: messenger.i18n.getMessage("missingPreview"),
     tagLabel: messenger.i18n.getMessage("tagLabel"),
@@ -29,6 +30,10 @@ async function start() {
     if (area === "local" && changes.separateTags) {
       messenger.LimeCards.setSeparateTags(changes.separateTags.newValue === true)
         .catch(() => console.error("Lime Mail Cards: layout update failed"));
+    }
+    if (area === "local" && changes.nicknameSenders) {
+      messenger.LimeCards.setNicknameSenders(changes.nicknameSenders.newValue || [])
+        .catch(() => console.error('Lime Mail Cards: nickname settings update failed'));
     }
     if (area === "local" && (changes.onlineAvatars || changes.avatarRules || changes.avatarCacheReset)) {
       if (changes.onlineAvatars) settings.onlineAvatars = changes.onlineAvatars.newValue === true;

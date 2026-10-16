@@ -29,6 +29,13 @@
   <label><input id="onlineAvatars" type="checkbox" disabled><span data-i18n="onlineAvatarsLabel"></span></label>
   <p data-i18n="onlineAvatarsHelp"></p>
   <button id="clearAvatarCache" type="button" disabled data-i18n="clearAvatarCache"></button>
+  <h2 data-i18n="nicknameTitle"></h2>
+  <form id="nicknameForm">
+    <label for="nicknameSenders" data-i18n="nicknameSendersLabel"></label>
+    <textarea id="nicknameSenders" rows="4" maxlength="32100" aria-describedby="nicknameHelp" placeholder="notifications@example.com" disabled></textarea>
+    <p id="nicknameHelp" data-i18n="nicknameHelp"></p>
+    <button type="submit" disabled data-i18n="saveNicknameSenders"></button>
+  </form>
   <h2 data-i18n="avatarRulesTitle"></h2>
   <form id="avatarForm">
     <label><span data-i18n="avatarAddress"></span><input id="avatarKey" type="text" required placeholder="person@example.com / example.com" maxlength="320" disabled></label>

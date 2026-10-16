@@ -42,6 +42,12 @@
         ]
       },
       {
+        "name": "setNicknameSenders",
+        "type": "function",
+        "async": true,
+        "parameters": [{"name": "addresses", "type": "array", "items": {"type": "string"}, "maxItems": 100}]
+      },
+      {
         "name": "getContactPhoto",
         "type": "function",
         "async": true,
@@ -49,6 +55,11 @@
           {
             "name": "address",
             "type": "string"
+          },
+          {
+            "name": "nickname",
+            "type": "string",
+            "optional": true
           }
         ]
       },

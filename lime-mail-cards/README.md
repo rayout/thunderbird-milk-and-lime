@@ -26,7 +26,9 @@ No profile files or legacy CSS preference are changed. Existing user CSS is left
   Removing a tag there removes that tag from the thread's messages; expanded rows affect one message.
   The add menu targets one message; native bulk commands remain available.
 - Local contact photos, manual address/domain images and optional domain-logo lookup.
-  Otherwise initials are shown. Shared notification addresses represent that sender, not an inferred person.
+  Otherwise initials are shown. For explicitly configured notification addresses, a unique local
+  contact's NickName can match an @handle in the sender name. Email photos take priority;
+  nickname matching changes only the list avatar, never the correspondent or reply address.
 - Only rendered rows are customized. Previews use header caches or the existing local Gloda index;
   if no preview exists, the subject gets more room. A known GitLab wrapper is trimmed from previews.
 - No account, folder, language, density, sorting or IMAP-tag-key migration is performed.

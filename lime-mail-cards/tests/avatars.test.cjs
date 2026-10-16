@@ -6,6 +6,18 @@ const scope = {URL, AbortController, setTimeout, clearTimeout, console, fetch, B
 const file = require('node:path').join(__dirname, '../avatars.js');
 if (fs.existsSync(file)) vm.runInNewContext(fs.readFileSync(file, 'utf8'), scope);
 const png = 'data:image/png;base64,aGVsbG8=';
+test('nickname identities reach local contacts but fallback logos use only the sender domain', async () => {
+ const seen=[];
+ const {resolver,calls}=setup({contact:async (address,nickname)=>{seen.push([address,nickname]);return nickname==='anna'?png:'';}});
+ resolver.configure({onlineAvatars:true});
+ assert.equal(await resolver.resolve('["notify@example.com","anna"]'),png);
+ assert.deepEqual(seen[0],['notify@example.com','anna']);
+ assert.equal(calls.length,0);
+ await resolver.resolve('["notify@example.com","other"]');
+ assert.equal(calls[0].url,'https://icons.duckduckgo.com/ip3/example.com.ico');
+ await resolver.flush();
+ for(const bad of ['[bad','["notify@example.com",{}]','["notify@example.com","a b"]']) assert.equal(await resolver.resolve(bad),'');
+});
 function setup(overrides = {}) {
   const calls = [], saved = [];
   const resolver = scope.LimeAvatars.create({

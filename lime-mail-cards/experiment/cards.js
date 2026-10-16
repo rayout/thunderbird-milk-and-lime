@@ -179,7 +179,7 @@ var LimeCards = (() => {
           }
           renderSummary(row, entry, data);
           const letters = initials(data.displayName, data.address);
-          const image = getAvatar?.(data.address) || "";
+          const image = getAvatar?.(data.avatarKey || data.address) || "";
           const avatarKey = data.address + "#" + image + "#" + letters;
           if (entry.avatarKey !== avatarKey) {
             entry.avatarKey = avatarKey;

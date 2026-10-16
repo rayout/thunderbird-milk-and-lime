@@ -68,6 +68,8 @@ For example, assign a portrait to `anna@example.invalid` or a service icon to `n
 
 The hero screenshot uses local address-book images. Conversations can display those contact photos independently. Cards' custom address/domain assignments are **not** synchronized into Conversations.
 
+**Photos by nickname.** For notifications sent from a shared address, add that address in Cards settings → Contact nicknames. For a sender named `Anna (@anna)`, set a local contact's Nickname to `anna` and add a photo. Matching is exact and case-sensitive; duplicate nicknames are not used. This affects message-list avatars only, not reply addresses or sender verification.
+
 ## Your mail stays your mail
 
 - No telemetry, cloud mailbox copy or AI processing is added by this project.

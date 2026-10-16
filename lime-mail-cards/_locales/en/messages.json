@@ -1,4 +1,9 @@
 {
+  "nicknameTitle": {"message": "Contact nicknames"},
+  "nicknameSendersLabel": {"message": "Notification sender addresses (one per line)"},
+  "nicknameHelp": {"message": "For these addresses only, Cards can match a sender name such as Anna (@anna) to a local contact whose Nickname is anna, without @. Matching is case-sensitive and requires exactly one contact. A photo matched by email takes priority. Used only for list avatars, not reply addresses or identity verification. Empty list disables matching. Conversations is unchanged."},
+  "saveNicknameSenders": {"message": "Save notification senders"},
+  "invalidNicknameSenders": {"message": "Enter up to 100 full email addresses, one per line (not domains or URLs)."},
   "extensionName": {
     "message": "Lime Mail Cards"
   },

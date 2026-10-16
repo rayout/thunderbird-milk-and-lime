@@ -5,7 +5,8 @@ var LimeCards = class extends ExtensionCommon.ExtensionAPI {
     return { LimeCards: {
       start: options => this.start(options),
       setSeparateTags: enabled => this.setSeparateTags(enabled),
-      getContactPhoto: address => this.getContactPhoto(address),
+      getContactPhoto: (address, nickname) => this.getContactPhoto(address, nickname),
+      setNicknameSenders: addresses => this.setNicknameSenders(addresses),
       setAvatar: (address, image, generation) => this.setAvatar(address, image, generation),
       resetAvatars: () => this.resetAvatars(),
       onAvatarRequest: new ExtensionCommon.EventManager({
@@ -32,22 +33,64 @@ var LimeCards = class extends ExtensionCommon.ExtensionAPI {
     } catch { return ""; }
   }
 
-  async getContactPhoto(address) {
+  setNicknameSenders(addresses) {
+    if (!Array.isArray(addresses) || addresses.length > 100 || addresses.some(address =>
+      typeof address !== "string" || address.length > 320 || !/^[^\s<>@]+@[^\s<>@]+$/.test(address))) throw new Error("Invalid notification senders");
+    this.nicknameSenders = new Set(addresses.map(address => address.toLowerCase()));
+    this.nicknameCards?.clear();
+    if (this.running) this.resetAvatars();
+  }
+
+  avatarIdentity(header, column) {
+    const address = this.correspondentAddress(header, column);
+    if (!this.nicknameSenders?.has(address) || column === "recipientCol") return address;
+    try {
+      const { MailServices } = ChromeUtils.importESModule("resource:///modules/MailServices.sys.mjs");
+      const authors = MailServices.headerParser.parseDecodedHeader(header.mime2DecodedAuthor || "");
+      if (authors.length !== 1 || authors[0].email.toLowerCase() !== address) return address;
+      const matches = [...(authors[0].name || "").matchAll(/(?:^|[\s(])@([\p{L}\p{N}_.-]{1,64})(?=$|[\s)])/gu)];
+      return matches.length === 1 ? JSON.stringify([address, matches[0][1]]) : address;
+    } catch { return address; }
+  }
+
+  async getContactPhoto(address, nickname = "") {
     const { MailServices } = ChromeUtils.importESModule("resource:///modules/MailServices.sys.mjs");
     for (const directory of MailServices.ab.directories) {
       if (directory.isRemote) continue;
       try {
-        const photo = directory.cardForEmailAddress(address)?.photoURL || "";
+        const photo = await this.readContactPhoto(directory.cardForEmailAddress(address));
+        if (photo) return photo;
+      } catch {}
+    }
+    if (!this.nicknameSenders?.has(address) || !/^[\p{L}\p{N}_.-]{1,64}$/u.test(nickname)) return "";
+    this.nicknameCards ??= new Map();
+    if (!this.nicknameCards.has(nickname)) {
+      const matches = [];
+      try {
+        for (const directory of MailServices.ab.directories) {
+          if (directory.isRemote) continue;
+          matches.push(...directory.getCardsFromProperty("NickName", nickname, true));
+          if (matches.length > 1) break;
+        }
+      } catch { return ""; }
+      if (this.nicknameCards.size >= 512) this.nicknameCards.clear();
+      this.nicknameCards.set(nickname, matches.length === 1 ? matches[0] : null);
+    }
+    return this.readContactPhoto(this.nicknameCards.get(nickname));
+  }
+
+  async readContactPhoto(card) {
+      try {
+        const photo = card?.photoURL || "";
         if (photo.length <= 350000 && /^data:image\/(png|jpeg|gif|webp);base64,[A-Za-z0-9+/]+=*$/.test(photo)) return photo;
-        if (!photo.startsWith("file:")) continue;
+        if (!photo.startsWith("file:")) return "";
         const file = Services.io.newURI(photo).QueryInterface(Ci.nsIFileURL).file;
         const photos = Services.dirsvc.get("ProfD", Ci.nsIFile); photos.append("Photos");
-        if (!photos.contains(file) || file.fileSize > 262144) continue;
+        if (!photos.contains(file) || file.fileSize > 262144) return "";
         const bytes = await IOUtils.read(file.path, {maxBytes: 262144});
         const mime = bytes[0] === 137 && bytes[1] === 80 ? "png" : bytes[0] === 255 && bytes[1] === 216 ? "jpeg" : bytes[0] === 71 && bytes[1] === 73 ? "gif" : bytes[0] === 82 && bytes[1] === 73 ? "webp" : "";
         if (mime) return "data:image/" + mime + ";base64," + ChromeUtils.base64URLEncode(bytes, {pad: true}).replace(/-/g, "+").replace(/_/g, "/");
       } catch {}
-    }
     return "";
   }
 
@@ -70,6 +113,7 @@ var LimeCards = class extends ExtensionCommon.ExtensionAPI {
 
   resetAvatars() {
     this.avatarGeneration++;
+    this.nicknameCards?.clear();
     this.avatarResults?.clear();
     this.refreshAvatars();
   }
@@ -110,6 +154,7 @@ var LimeCards = class extends ExtensionCommon.ExtensionAPI {
         rowKey: root.folder.URI + "#" + root.messageKey + "#" + root.messageId,
         displayName: summary?.sender ?? nativeSummary.sender,
         address: this.correspondentAddress(header, senderColumn),
+        avatarKey: this.avatarIdentity(header, senderColumn),
         headers,
         nativeSummary,
         summary,
@@ -346,6 +391,7 @@ var LimeCards = class extends ExtensionCommon.ExtensionAPI {
     this.unloadStyles();
     if (!this.running) return;
     this.running = false;
+    this.nicknameCards?.clear();
     for (const topic of this.contactTopics || []) Services.obs.removeObserver(this.contactObserver, topic);
     this.avatarResults?.clear();
     for (const win of this.windows.keys()) this.detachMainWindow(win);

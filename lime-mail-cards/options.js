@@ -5,6 +5,8 @@ const online = document.getElementById("onlineAvatars");
 const form = document.getElementById("avatarForm");
 const rulesList = document.getElementById("avatarRules");
 const cacheButton = document.getElementById("clearAvatarCache");
+const nicknameForm = document.getElementById("nicknameForm");
+const nicknameSenders = document.getElementById("nicknameSenders");
 const text = key => messenger.i18n.getMessage(key);
 let rules = {};
 function showRules() {
@@ -38,12 +40,14 @@ for (const element of document.querySelectorAll("[data-i18n]")) {
 }
 document.documentElement.lang = messenger.i18n.getUILanguage();
 async function load() {
-  const settings = await messenger.storage.local.get({ separateTags: false, onlineAvatars: false, avatarRules: {} });
+  const settings = await messenger.storage.local.get({ separateTags: false, onlineAvatars: false, avatarRules: {}, nicknameSenders: [] });
   checkbox.checked = settings.separateTags === true;
   online.checked = settings.onlineAvatars === true;
   rules = settings.avatarRules; showRules();
   online.disabled = false; cacheButton.disabled = false;
   for (const control of form.elements) control.disabled = false;
+  nicknameSenders.value = settings.nicknameSenders.join('\n');
+  for (const control of nicknameForm.elements) control.disabled = false;
   checkbox.disabled = false;
 }
 checkbox.addEventListener("change", async () => {
@@ -55,6 +59,22 @@ checkbox.addEventListener("change", async () => {
     checkbox.checked = !checkbox.checked;
     status.textContent = messenger.i18n.getMessage("settingError");
   } finally { checkbox.disabled = false; }
+});
+nicknameForm.addEventListener('submit', async event => {
+  event.preventDefault();
+  const values = nicknameSenders.value.split(/\r?\n/).map(value => value.trim()).filter(Boolean);
+  const addresses = values.map(value => LimeAvatars.ruleKey(value));
+  if (addresses.length > 100 || addresses.some(address => !address.includes('@') || address.length > 320)) {
+    status.textContent = text('invalidNicknameSenders'); return;
+  }
+  for (const control of nicknameForm.elements) control.disabled = true;
+  try {
+    const unique = [...new Set(addresses)];
+    await messenger.storage.local.set({nicknameSenders: unique});
+    nicknameSenders.value = unique.join('\n');
+    status.textContent = text('settingSaved');
+  } catch { status.textContent = text('settingError'); }
+  finally { for (const control of nicknameForm.elements) control.disabled = false; }
 });
 online.addEventListener('change', async () => {
   online.disabled = true;

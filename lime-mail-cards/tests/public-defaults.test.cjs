@@ -14,7 +14,7 @@ test('fresh installation makes no logo request; explicit opt-in remains effectiv
       messenger: {
         i18n: {getMessage: key => key},
         storage: {local: {get: async defaults => ({...defaults, ...saved}), set: async () => {}}, onChanged: {addListener() {}}},
-        LimeCards: {getContactPhoto: async () => '', onAvatarRequest: {addListener(fn) {onRequest = fn;}}, start: async () => {}, setAvatar: async (...args) => images.push(args)},
+        LimeCards: {setNicknameSenders:async()=>{},getContactPhoto: async () => '', onAvatarRequest: {addListener(fn) {onRequest = fn;}}, start: async () => {}, setAvatar: async (...args) => images.push(args)},
       },
     };
     vm.runInNewContext(fs.readFileSync(path.join(__dirname, '../avatars.js'), 'utf8'), scope);

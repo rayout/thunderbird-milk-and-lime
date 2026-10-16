@@ -124,11 +124,19 @@ var LimeAvatars = (() => {
         pending.clear();
       },
       async resolve(value) {
+        let nickname = '';
+        if (typeof value === 'string' && value.startsWith('[')) {
+          try {
+            const identity = JSON.parse(value);
+            if (!Array.isArray(identity) || identity.length !== 2 || typeof identity[1] !== 'string' || !/^[\p{L}\p{N}_.-]{1,64}$/u.test(identity[1])) return '';
+            [value, nickname] = identity;
+          } catch { return ''; }
+        }
         const address = ruleKey(value);
         if (!address.includes('@')) return '';
         const revision = generation;
         try {
-          const photo = await contact(address);
+          const photo = await contact(address, nickname);
           if (photo && /^data:image\/(png|jpeg|gif|webp);base64,[A-Za-z0-9+/]+=*$/.test(photo) && photo.length <= 350000) {
             const image = await toImage(await (await fetch(photo)).blob());
             if (revision !== generation) return '';
