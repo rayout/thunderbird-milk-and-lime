@@ -22,15 +22,11 @@ A light, lime-accented workspace for Thunderbird. Recognize the sender, see what
 - **Make room your way.** Tags replace the preview by default; switch on a separate tag row if you want both.
 - **One consistent look.** Soft panels, graphite text, lime accents and green links. Styling ships inside the extension.
 
-## Choose your setup
+## Theme and extension
 
-| Component | What you get | Required? |
-| --- | --- | --- |
-| **Milk & Lime** | Standalone color theme, without access to messages | Optional; the simplest starting point |
-| **Lime Mail Cards** | Built-in interface styling, message cards, tags, thread summaries and avatars | For the full workspace |
-| **[Thunderbird Conversations](https://addons.thunderbird.net/en-US/thunderbird/addon/gmail-conversation-view/)** | A conversation reader with inline replies | Optional; installed separately |
+Install **Milk & Lime** and **Lime Mail Cards** together: the theme sets the palette, while the extension adds interface styling, avatars, tags and thread summaries. No extra CSS files needed.
 
-Lime Mail Cards works with Thunderbird's ordinary reader. When Conversations is present, bundled styles also apply to its reader. We do not modify or distribute Conversations.
+For a conversation reader with inline replies, add [Thunderbird Conversations](https://addons.thunderbird.net/en-US/thunderbird/addon/gmail-conversation-view/). It is optional: Cards works with Thunderbird's standard reader and also styles Conversations when installed.
 
 <details>
 <summary>See the ordinary reader and standalone theme</summary>
@@ -59,8 +55,6 @@ The theme alone changes colors, not the layout or message-list features.
 
 No copying `userChrome.css`, no legacy CSS switch, no account migration. Disable Cards to remove its styling and row enhancements; existing mail and native tags remain.
 
-**Already using the personal CSS pack?** Keep a backup. The extension does not delete or merge your existing profile CSS; duplicate rules can affect the result. The separate manual-style archive is an alternative for installations without Cards, not an extra installation step.
-
 ## Faces for people. Icons for services.
 
 Images are chosen in this order:
@@ -74,8 +68,6 @@ For example, assign a portrait to `anna@example.invalid` or a service icon to `n
 
 The hero screenshot uses local address-book images. Conversations can display those contact photos independently. Cards' custom address/domain assignments are **not** synchronized into Conversations.
 
-Shared notification addresses are treated as one sender. The public build does not infer individual GitLab users from a display name or include company-specific mappings.
-
 ## Your mail stays your mail
 
 - No telemetry, cloud mailbox copy or AI processing is added by this project.
@@ -84,7 +76,7 @@ Shared notification addresses are treated as one sender. The public build does n
 - Online logos are opt-in. DuckDuckGo receives the sender's domain and your IP address, not the full email address or message content.
 - The extension uses a **full-access Experiment API** to customize Thunderbird internals. Install only from a source you trust.
 
-Read the [privacy policy](lime-mail-cards/PRIVACY.md) and [Zimbra compatibility note](docs/zimbra.md).
+Read the [privacy policy](lime-mail-cards/PRIVACY.md).
 
 ## Compatibility and boundaries
 

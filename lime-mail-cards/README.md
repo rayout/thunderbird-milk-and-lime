@@ -30,7 +30,6 @@ No profile files or legacy CSS preference are changed. Existing user CSS is left
 - Only rendered rows are customized. Previews use header caches or the existing local Gloda index;
   if no preview exists, the subject gets more room. A known GitLab wrapper is trimmed from previews.
 - No account, folder, language, density, sorting or IMAP-tag-key migration is performed.
-  Server-side tag compatibility is separate; see `../docs/zimbra.md`.
 
 ## Privacy
 
@@ -46,12 +45,6 @@ five-second timeout, 256 KiB response limit. Failure falls back to initials. The
 Local contact images are read without querying remote address books; remote photo URLs are not fetched.
 There is no telemetry or separate persistent mail-body cache. Thunderbird itself still performs normal mail sync.
 See [privacy policy](PRIVACY.md).
-
-## From the personal build
-
-0.3.0 removes the bundled company logo and company-specific GitLab identity mapping.
-Use manual images or local contact photos for portable behavior. It preserves the extension ID,
-native tags and stored options. This candidate has not been installed into the working mail profile.
 
 ## Verification
 

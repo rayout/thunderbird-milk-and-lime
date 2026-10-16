@@ -26,7 +26,7 @@ No working account or user profile was modified. No external publication was per
 ## Not verified / release gates
 
 - Windows/macOS, physical keyboard/screen reader, encrypted mail and large production folders.
-- IMAP/Zimbra round-trip synchronization in this release candidate; no tag-key migration is included.
+- IMAP round-trip synchronization in this release candidate; no tag-key migration is included.
 - Upgrade from every prior local build, especially with another avatar extension active.
 - Current ATN submission acceptance of the full extension, full security audit and provenance review of optional CSS glyphs.
 - Cards screenshots now include bundled interface/content styles; the standalone theme screenshots do not.
