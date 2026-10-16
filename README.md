@@ -98,7 +98,7 @@ XPI_FILE="$PWD/dist/lime-mail-cards-0.3.0.xpi" node --test lime-mail-cards/tests
 (cd dist && sha256sum -c SHA256SUMS)
 ```
 
-Builds are deterministic on the same toolchain. Output includes separate theme/extension XPIs, a source archive, an alternative manual-style archive and checksums.
+Builds are deterministic on the same toolchain. Output includes separate theme/extension XPIs, a source archive and checksums.
 
 See [validation results](docs/VALIDATION.md) and [native test instructions](lime-mail-cards/README.md). Native tests require a disposable local-only profile, never a working mailbox.
 

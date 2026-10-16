@@ -14,4 +14,3 @@
 - Confirm current ATN submission policy before upload: custom Experiment APIs currently block new submissions except accepted published API drafts.
   Source: https://github.com/thunderbird/webext-linter/blob/main/assets/registry.yaml (checked 2026-10-16).
 - Ordinary theme submission is separate; approval by ATN is not guaranteed.
-- Do not market the optional advanced-CSS screenshot as the standalone theme.

@@ -36,14 +36,13 @@ def main():
     cards_version = json.loads((ROOT / 'lime-mail-cards/manifest.json').read_text())['version']
     theme_version = json.loads((ROOT / 'milk-lime/manifest.json').read_text())['version']
     sources = ['README.md', 'README.ru.md', 'LICENSE', '.gitignore']
-    for directory in ['lime-mail-cards', 'milk-lime', 'advanced-styles', 'scripts', 'tests', 'docs']:
+    for directory in ['lime-mail-cards', 'milk-lime', 'scripts', 'tests', 'docs']:
         sources.extend(str(file.relative_to(ROOT)) for file in (ROOT / directory).rglob('*')
                        if file.is_file() and (file.suffix in {'.js', '.cjs', '.json', '.html', '.css', '.md', '.py'} or file.name == 'LICENSE'))
     sources.extend(str(file.relative_to(ROOT)) for file in (ROOT / 'docs/screenshots').glob('*.png'))
     packages = [
         (f'lime-mail-cards-{cards_version}.xpi', ROOT / 'lime-mail-cards', CARDS),
         (f'milk-lime-theme-{theme_version}.xpi', ROOT / 'milk-lime', ['manifest.json', 'LICENSE', '_locales/en/messages.json', '_locales/ru/messages.json']),
-        ('milk-lime-advanced-0.1.7.zip', ROOT, {'README.md':'advanced-styles/README.md', 'LICENSE':'LICENSE', 'userChrome.css':'lime-mail-cards/styles/interface.css', 'userContent.css':'lime-mail-cards/styles/content.css'}),
         (f'milk-lime-source-{cards_version}.zip', ROOT, sources),
     ]
     sums = []
